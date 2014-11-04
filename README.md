@@ -13,18 +13,6 @@ It's pretty easy to run stagbeetle.
 Download stag-x.xx.jar from [here](https://github.com/subaru45/stagbeetle),
 and double-click it!
 
-## TODO
-
-* make transverse-transform alternate
-* alpha blending
-  * addition and others...?
-* enable loading images
-  * png?
-  * tiling image
-* colour replacing with predefined pallet
-  * to be more phychedelic...
-* layers
-
 ## License
 
 Copyright © 2014 subaru45
