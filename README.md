@@ -1,6 +1,6 @@
 # stagbeetle
 
-You see battle animations from Mother2 (a.k.a. Eathbound).
+You see battle animations from Mother2 (a.k.a. Earthbound).
 
 ## Installation
 
