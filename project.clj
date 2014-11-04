@@ -1,4 +1,4 @@
-(defproject stagbeetle "0.1.0"
+(defproject stagbeetle "0.01"
   :description "Battle animations of MOTHER 2"
   :url "http://github.com/subaru45/stagbeetle"
   :license {:name "Eclipse Public License"
@@ -8,4 +8,5 @@
   :main ^:skip-aot stagbeetle.core
   :target-path "target/%s"
   :global-vars {*warn-on-reflection* true}
+  :uberjar-name "stag-%s.jar"
   :profiles {:uberjar {:aot :all}})
