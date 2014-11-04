@@ -12,6 +12,9 @@
                   Graphics
                   Graphics2D))
 
+
+;;;; to-raster utilities
+
 (defmacro draw-to-raster [^WritableRaster r & body]
   `(let [~'w (.getWidth ~r)
          ~'h (.getHeight ~r)]
@@ -56,6 +59,16 @@
        (dotimes [x w]
          (.getPixel src (int (mod (+ off x) w)) (int sy) c)
          (.setPixel dest x (int dy) c)))))
+
+
+;;;; transforms
+
+(defn translate!
+  [^WritableRaster dest ^Raster src ofx ofy]
+  (let [w (.getWidth dest)
+        h (.getHeight dest)]
+    (dotimes [y h]
+      (draw-line! dest src (mod (+ y ofy) h) y ofx))))
 
 (defn transform-transverse!
   [^WritableRaster dest ^Raster src wfn amp frq phs]
