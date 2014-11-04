@@ -15,17 +15,19 @@
 
 
 (def +fps+ 30)
-(def +width+ 320)
-(def +height+ 240)
+(def +width+ 640)
+(def +height+ 480)
 
 (def frm (frame :title "stagbeetle"
                 :resizable? false))
 (def cnv (canvas))
 (def ^BufferedImage img
-  (buffered-image +width+ +height+ BufferedImage/TYPE_INT_ARGB))
+  (buffered-image (int (/ +width+ 2)) (int (/ +height+ 2))
+                  BufferedImage/TYPE_INT_ARGB))
 
 (defn paint [^Component c ^Graphics g]
-  (try (.drawImage g img 0 0 nil)))
+  (try (.drawImage g img 0 0 +width+ +height+
+                   0 0 (int (/ +width+ 2)) (int (/ +height+ 2)) nil)))
 
 
 ;;; drawing thread
