@@ -3,8 +3,6 @@
   (:use [seesaw.core]
         [seesaw.graphics]))
 
-(set! *warn-on-reflection* true)
-
 (import (java.awt.image BufferedImage
                         Raster
                         RenderedImage

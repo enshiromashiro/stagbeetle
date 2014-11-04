@@ -4,8 +4,6 @@
         [seesaw.graphics]
         [stagbeetle.graphics]))
 
-(set! *warn-on-reflection* true)
-
 (import (java.awt.image BufferedImage
                         Raster
                         WritableRaster)
