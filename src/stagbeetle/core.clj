@@ -58,10 +58,10 @@
   (Thread/sleep 1000)
   (let [^WritableRaster des (.getRaster img)
         ^Raster src (.getData img)
-        ph (ref 0)]
+        ph (atom 0)]
     (on-drawing-thread
      (transform-longitudinal! des src #(Math/sin %) 3 5 @ph)
-     (dosync (alter ph #(mod (+ % 0.1) 6.28))))))
+     (swap! ph #(mod (+ % 0.1) 6.28)))))
 
 
 (defn -main

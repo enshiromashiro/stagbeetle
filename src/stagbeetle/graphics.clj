@@ -60,24 +60,24 @@
 (defn transform-transverse!
   [^WritableRaster dest ^Raster src wfn amp frq phs]
   (let [h (.getHeight dest)
-        rad (ref phs)
+        rad (atom phs)
         step (/ 1 frq)
         pi2 (* Math/PI 2)]
     (dotimes [y h]
       (let [tx (int (* (wfn @rad) amp))]
         (draw-line! dest src y y tx)
-        (dosync (alter rad #(mod (+ % step) pi2)))))))
+        (swap! rad #(mod (+ % step) pi2))))))
 
 (defn transform-transverse-alternate!
   [^WritableRaster dest ^Raster src wfn amp frq phs]
   (let [h (.getHeight dest)
-        rad (ref phs)
+        rad (atom phs)
         step (/ 1 frq)
         pi2 (* Math/PI 2)]
     (dotimes [y h]
       (let [tx (int (* (wfn @rad) amp))]
         (draw-line! dest src y y (if (even? y) tx (- tx)))
-        (dosync (alter rad #(mod (+ % step) pi2)))))))
+        (swap! rad #(mod (+ % step) pi2))))))
 
 (defn transform-longitudinal! [^WritableRaster dest
                                ^Raster src
@@ -86,9 +86,9 @@
         step (/ 1 frq)
         hamp (int (/ amp 2))
         pi2 (* Math/PI 2)
-        dy (ref 0)
-        inc-dy (fn [] (dosync (alter dy #(inc %))))
-        add-dy (fn [x] (dosync (alter dy #(mod (+ x %) h))))]
+        dy (atom 0)
+        inc-dy (fn []  (swap! dy #(inc %)))
+        add-dy (fn [x] (swap! dy #(mod (+ x %) h)))]
     (loop [py 0
            rad phs]
       (when (and (< py h) (< @dy h))
