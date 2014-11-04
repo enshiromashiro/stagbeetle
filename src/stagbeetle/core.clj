@@ -18,7 +18,8 @@
 (def +width+ 320)
 (def +height+ 240)
 
-(def frm (frame :title "stagbeetle"))
+(def frm (frame :title "stagbeetle"
+                :resizable? false))
 (def cnv (canvas))
 (def ^BufferedImage img
   (buffered-image +width+ +height+ BufferedImage/TYPE_INT_ARGB))
