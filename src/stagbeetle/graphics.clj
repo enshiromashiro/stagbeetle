@@ -61,6 +61,42 @@
          (.setPixel dest x (int dy) c)))))
 
 
+;;;; drawing
+
+(defn draw!
+  [^WritableRaster dest ^Raster ras dx dy]
+  (let [dw (.getWidth dest)
+        dh (.getHeight dest)
+        rw (.getWidth ras)
+        rh (.getHeight ras)
+        x-init (if (neg? dx) (Math/abs (int dx)) 0)
+        y-init (if (neg? dy) (Math/abs (int dy)) 0)
+        x-end (if (> (+ dx rw) dw) (- dw dx) rw)
+        y-end (if (> (+ dy rh) dh) (- dh dy) rh)
+        x (atom x-init)
+        y (atom y-init)
+        c (int-array (.getNumBands (.getSampleModel dest)))]
+    (while (< @y y-end)
+      (while (< @x x-end)
+        (.getPixel ras (int @x) (int @y) c)
+        (.setPixel dest (int (+ @x dx)) (int (+ @y dy)) c)
+        (swap! x inc))
+      (reset! x x-init)
+      (swap! y inc))))
+
+(defn tile!
+  [^WritableRaster dest ^Raster ras ofx ofy]
+  (let [dw (.getWidth dest)
+        dh (.getHeight dest)
+        rw (.getWidth ras)
+        rh (.getHeight ras)]
+    (doseq [y (range (- (Math/abs (int ofy)))
+                     (int (+ (* 2 rh) (quot dh rh))) rh)]
+      (doseq [x (range (- (Math/abs (int ofx)))
+                       (int (+ (* 2 rw) (quot dw rw))) rw)]
+        (draw! dest ras x y)))))
+
+
 ;;;; transforms
 
 (defn translate!
