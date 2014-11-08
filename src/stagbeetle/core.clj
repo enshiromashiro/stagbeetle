@@ -2,7 +2,8 @@
   (:gen-class)
   (:use [seesaw.core]
         [seesaw.graphics]
-        [stagbeetle.graphics]))
+        [stagbeetle.graphics]
+        [stagbeetle.image]))
 
 (import (java.awt.image BufferedImage
                         Raster
@@ -49,19 +50,18 @@
   (-> frm pack! show!))
 
 (defn draw-wave []
-  (draw-stripe! (.getRaster img) 20 0 [255 255 255 255] [90 170 255 255])
-  (repaint! frm)
-  (Thread/sleep 1000)
-  (transform-transverse! (.getRaster img) (.getData img)
-                         #(Math/sin %) 20 10 0)
-  (repaint! frm)
-  (Thread/sleep 1000)
-  (let [^WritableRaster des (.getRaster img)
-        ^Raster src (.getData img)
-        ph (atom 0)]
+  (let [png (read-image "img01.png")
+        r (.getRaster img)
+        w (.getWidth ^Raster png)
+        h (.getHeight ^Raster png)
+        ofx (atom 0)
+        ofy (atom 0)]
     (on-drawing-thread
-     (transform-longitudinal! des src #(Math/sin %) 3 5 @ph)
-     (swap! ph #(mod (+ % 0.1) 6.28)))))
+     (tile! r png @ofx @ofy)
+     (transform-transverse-alternate! r (.getData img)
+                                      #(Math/sin %) 15 20 0)
+     (reset! ofx (mod (inc @ofx) w))
+     (reset! ofy (mod (inc @ofy) h)))))
 
 
 (defn -main

@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [seesaw "1.4.4"]]
   :main ^:skip-aot stagbeetle.core
+  :resource-paths ["resources"]
   :target-path "target/%s"
   :global-vars {*warn-on-reflection* true}
   :uberjar-name "stag-%s.jar"
