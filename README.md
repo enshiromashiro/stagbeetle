@@ -2,8 +2,8 @@
 
 You see battle animations from Mother2 (a.k.a. Earthbound).
 
-> Mr. Saturn "I no hand you my stag beetle..."
-> -- at the hole of Saturn Valley, MOTHER2
+> "I no hand you my stag beetle..."
+> -- Mr. Saturn said at the hole of Saturn Valley, MOTHER2
 
 ## Installation
 
